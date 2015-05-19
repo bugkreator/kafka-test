@@ -23,11 +23,12 @@ object TestProducer {
       println("Done")*/
       println ("Starting...")
       val producer = new KafkaProducer(Settings.testTopic, Settings.messageBroker)
-      for (i<-1 to 100) {
+      for (i<-1 to 20) {
          val message = "Message " + i + " " + UUID.randomUUID().toString + " " + (new SimpleDateFormat("YYYY-MM-dd hh:mm:ss.SSS")).format(Calendar.getInstance.getTime)
          producer.send(message)
+         Thread.sleep(1000)
       }
-
+      producer.close()
       /*
      val numList = List(0,1,2);
      for (a <- numList) {

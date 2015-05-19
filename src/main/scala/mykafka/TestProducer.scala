@@ -23,7 +23,6 @@ object TestProducer {
       println("Done")*/
       val producer = new KafkaProducer(Settings.testTopic, Settings.messageBroker)
 
-
       for (a <- 1 to 10 )
       {
          producer.send("Message "+a+" "+ UUID.randomUUID().toString+" "+new Date())

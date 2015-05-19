@@ -1,7 +1,7 @@
 package mykafka
 
-import java.util.UUID
-import java.util.Date
+import java.text.SimpleDateFormat
+import java.util.{Calendar, UUID, Date}
 
 
 object TestProducer {
@@ -17,18 +17,17 @@ object TestProducer {
 
       val producer: KafkaProducer[String,String] = new KafkaProducer(props )
       //val data = new KeyedMessage[String, String]("topic2", "key1", "value1")
-      val data = new ProducerRecord[String,String]("topic2", "key1", "value1 @ " + (new SimpleDateFormat("YYYY-MM-dd hh:mm:ss")).format(Calendar.getInstance.getTime))
+      val data = new ProducerRecord[String,String]("topic2", "key1", "value1 @ " +
       producer.send(data)
       producer.close()
       println("Done")*/
+      println ("Starting...")
       val producer = new KafkaProducer(Settings.testTopic, Settings.messageBroker)
-
-      for (a <- 1 to 10 )
-      {
-         producer.send("Message "+a+" "+ UUID.randomUUID().toString+" "+new Date())
-         print(".")
-         Thread.sleep(1000);
+      for (i<-1 to 100) {
+         val message = "Message " + i + " " + UUID.randomUUID().toString + " " + (new SimpleDateFormat("YYYY-MM-dd hh:mm:ss.SSS")).format(Calendar.getInstance.getTime)
+         producer.send(message)
       }
+
       /*
      val numList = List(0,1,2);
      for (a <- numList) {

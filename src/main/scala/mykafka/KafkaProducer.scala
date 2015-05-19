@@ -65,6 +65,7 @@ case class KafkaProducer(
                             */
                           ) {
 
+
    val props = new Properties()
 
    val codec = if(compress) DefaultCompressionCodec.codec else NoCompressionCodec.codec

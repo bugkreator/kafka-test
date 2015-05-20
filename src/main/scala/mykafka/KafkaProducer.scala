@@ -80,10 +80,6 @@ case class KafkaProducer(
 
    val producer = new Producer[AnyRef, AnyRef](new ProducerConfig(props))
 
-   def close() : Unit = {
-      producer.close()
-   }
-
    def kafkaMesssage(message: Array[Byte], partition: Array[Byte]): KeyedMessage[AnyRef, AnyRef] = {
       if (partition == null) {
          new KeyedMessage(topic,message)
@@ -102,6 +98,10 @@ case class KafkaProducer(
             e.printStackTrace
             System.exit(1)
       }
+   }
+
+   def close(): Unit = {
+      producer.close()
    }
 
 }

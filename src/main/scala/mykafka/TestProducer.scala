@@ -26,7 +26,7 @@ object TestProducer {
       for (i<-1 to 20) {
          val message = "Message " + i + " " + UUID.randomUUID().toString + " " + (new SimpleDateFormat("YYYY-MM-dd hh:mm:ss.SSS")).format(Calendar.getInstance.getTime)
          producer.send(message)
-         Thread.sleep(1000)
+         //Thread.sleep(1000)
       }
       producer.close()
       /*
@@ -38,6 +38,6 @@ object TestProducer {
        //so the second "send" function of producer will be called
        producer.send(testMessage.getBytes("UTF8"), key)
      }*/
-      println("All done!");
+      println("Done.");
    }
 }

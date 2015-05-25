@@ -1,5 +1,6 @@
-
 package mykafka
+
+/* Taken from https://github.com/stealthly/scala-kafka */
 
 import scala.collection.JavaConversions._
 import joptsimple._
@@ -16,8 +17,7 @@ case class KafkaProducer(
                           topic: String,
                           brokerList: String,
                           /** brokerList
-                            * This is for bootstrapping and the producer will only use it for getting metadata (topics, partitions and replicas).
-                            * The socket connections for sending the actual data will be established based on the broker information returned in
+                            * This is for bootstrapping and the producer will only use it for getting metadata (topics, partitions and replicas).* The socket connections for sending the actual data will be established based on the broker information returned in
                             * the metadata. The format is host1:port1,host2:port2, and the list can be a subset of brokers or a VIP pointing to a
                             * subset of brokers.
                             */
@@ -66,6 +66,8 @@ case class KafkaProducer(
                           ) {
 
 
+
+   println (">>>>new Properties")
    val props = new Properties()
 
    val codec = if(compress) DefaultCompressionCodec.codec else NoCompressionCodec.codec

@@ -22,11 +22,16 @@ object TestProducer {
       producer.close()
       println("Done")*/
       println ("Starting...")
-      val producer = new KafkaProducer(Settings.testTopic, Settings.messageBroker)
-      for (i<-1 to 20) {
-         val message = "Message " + i + " " + UUID.randomUUID().toString + " " + (new SimpleDateFormat("YYYY-MM-dd hh:mm:ss.SSS")).format(Calendar.getInstance.getTime)
-         producer.send(message)
+      val producer = new KafkaProducer(Settings.topicName, Settings.brokerList)
+
+      for (i<-0 to 1000)  {
+         val message = "Message " + i + " " + (new SimpleDateFormat("YYYY-MM-dd hh:mm:ss.SSS")).format(Calendar.getInstance.getTime)
+         producer.send(message,UUID.randomUUID().toString)
          //Thread.sleep(1000)
+         if (i%100==0)
+            {
+               producer.producer.info("Message #" + i)
+            }
       }
       producer.close()
       /*
@@ -35,7 +40,7 @@ object TestProducer {
        // Create a partition key as Byte Array
        var key = java.nio.ByteBuffer.allocate(4).putInt(a).array()
        //Here I give a Array[Byte] key
-       //so the second "send" function of producer will be called
+       //so the second "send" function of produccd er will be called
        producer.send(testMessage.getBytes("UTF8"), key)
      }*/
       println("Done.");

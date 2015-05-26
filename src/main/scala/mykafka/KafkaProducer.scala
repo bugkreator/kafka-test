@@ -13,7 +13,7 @@ import java.util.Properties
 import kafka.producer._
 
 
-case class KafkaProducer(
+case class KafkaProducer[K,V](
                           topic: String,
                           brokerList: String,
                           /** brokerList
@@ -66,8 +66,6 @@ case class KafkaProducer(
                           ) {
 
 
-
-   println (">>>>new Properties")
    val props = new Properties()
 
    val codec = if(compress) DefaultCompressionCodec.codec else NoCompressionCodec.codec
@@ -79,22 +77,25 @@ case class KafkaProducer(
    props.put("message.send.max.retries", messageSendMaxRetries.toString)
    props.put("request.required.acks",requestRequiredAcks.toString)
    props.put("client.id",clientId.toString)
+   props.put("serializer.class","kafka.serializer.StringEncoder")
 
-   val producer = new Producer[AnyRef, AnyRef](new ProducerConfig(props))
+   val producer = new Producer[K, V](new ProducerConfig(props))
 
-   def kafkaMesssage(message: Array[Byte], partition: Array[Byte]): KeyedMessage[AnyRef, AnyRef] = {
-      if (partition == null) {
+   def kafkaMesssage(message: V, partitionKey: K): KeyedMessage[K, V] = {
+      if (partitionKey == null) {
          new KeyedMessage(topic,message)
       } else {
-         new KeyedMessage(topic,partition,message)
+         new KeyedMessage(topic,partitionKey,message)
       }
    }
 
-   def send(message: String, partition: String = null): Unit = send(message.getBytes("UTF8"), if (partition == null) null else partition.getBytes("UTF8"))
+   //def send(message: String, partition: String = null): Unit = send(message.getBytes("UTF8"), if (partition == null) null else partition.getBytes("UTF8"))
 
-   def send(message: Array[Byte], partition: Array[Byte]): Unit = {
+   def send(message: V): Unit = send(message, null.asInstanceOf[K])
+
+   def send(message: V, partitionKey: K ): Unit = {
       try {
-         producer.send(kafkaMesssage(message, partition))
+         producer.send(kafkaMesssage(message, partitionKey))
       } catch {
          case e: Exception =>
             e.printStackTrace

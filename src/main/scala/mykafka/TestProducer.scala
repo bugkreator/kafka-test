@@ -3,8 +3,10 @@ package mykafka
 import java.text.SimpleDateFormat
 import java.util.{Calendar, UUID, Date}
 
+import kafka.utils.Logging
 
-object TestProducer {
+
+object TestProducer extends Logging {
    def main(args: Array[String]) {
       /*
       val props: Properties = new Properties()
@@ -21,16 +23,17 @@ object TestProducer {
       producer.send(data)
       producer.close()
       println("Done")*/
-      println ("Starting...")
-      val producer = new KafkaProducer(Settings.topicName, Settings.brokerList)
+      info ("Starting...")
+      val producer = new KafkaProducer[String,String](Settings.topicName, Settings.brokerList)
 
-      for (i<-0 to 1000)  {
+      for (i<-0 to 100)  {
          val message = "Message " + i + " " + (new SimpleDateFormat("YYYY-MM-dd hh:mm:ss.SSS")).format(Calendar.getInstance.getTime)
-         producer.send(message,UUID.randomUUID().toString)
+         val key : String = "F"
+         producer.send(message,key)
          //Thread.sleep(1000)
          if (i%100==0)
             {
-               producer.producer.info("Message #" + i)
+               info("Message #" + i)
             }
       }
       producer.close()
@@ -43,6 +46,6 @@ object TestProducer {
        //so the second "send" function of produccd er will be called
        producer.send(testMessage.getBytes("UTF8"), key)
      }*/
-      println("Done.");
+      info ("Done.");
    }
 }

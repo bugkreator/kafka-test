@@ -91,12 +91,31 @@ class KafkaConsumer(
       info("reading on stream now")
       for(messageAndTopic <- stream) {
          try {
-            info("writing from stream")
+            //info("writing from stream")
             write(messageAndTopic.message)
-            info("written to stream")
+            //info("written to stream")
          } catch {
             case e: Throwable =>
                if (true) { //this is objective even how to conditionalize on it
+                  error("Error processing message, skipping this message: ", e)
+               } else {
+                  throw e
+               }
+         }
+      }
+   }
+
+   def debug_read(write: MessageAndMetadata[Array[Byte], Array[Byte]] =>Unit) = {
+      info("debug_reading stream now")
+      for (messageAndTopic <- stream) {
+         try {
+            //info("writing from stream")
+            write(messageAndTopic)
+            //info("written to stream")
+         } catch {
+            case e: Throwable =>
+               if (true) {
+                  //this is objective even how to conditionalize on it
                   error("Error processing message, skipping this message: ", e)
                } else {
                   throw e

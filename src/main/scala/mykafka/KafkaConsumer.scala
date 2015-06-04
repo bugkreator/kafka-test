@@ -83,6 +83,10 @@ class KafkaConsumer(
 
    val filterSpec = new Whitelist(topic)
 
+   def commitOffsets(retryOnFailure: Boolean) : Unit = {
+      connector.commitOffsets(retryOnFailure)
+   }
+
    info("setup:start topic=%s for zk=%s and groupId=%s".format(topic,zookeeperConnect,groupId))
    val stream = connector.createMessageStreamsByFilter(filterSpec, 1, new DefaultDecoder(), new DefaultDecoder()).get(0)
    info("setup:complete topic=%s for zk=%s and groupId=%s".format(topic,zookeeperConnect,groupId))
@@ -93,6 +97,7 @@ class KafkaConsumer(
          try {
             //info("writing from stream")
             write(messageAndTopic.message)
+            commitOffsets(true)
             //info("written to stream")
          } catch {
             case e: Throwable =>
@@ -125,6 +130,7 @@ class KafkaConsumer(
    }
 
    def close() {
+      commitOffsets(true)
       connector.shutdown()
    }
 }

@@ -1,28 +1,40 @@
 package mykafka
 
-import java.text.SimpleDateFormat
+
+import java.util.concurrent.atomic.AtomicInteger
 import java.util.{Calendar, UUID}
 
 import kafka.message.MessageAndMetadata
 import kafka.utils.Logging
 
-object TestConsumer extends Logging {
-   def main(args: Array[String]) {
+object TestConsumer extends App with Logging {
+   //def main(args: Array[String]) {
 
-      def debugMessage(msg: MessageAndMetadata[Array[Byte], Array[Byte]]) : Unit = {
-         info(new String(msg.message()) + " from partition #" + msg.partition)
-      }
-
-      def processMessage(blob: Array[Byte]) : Unit = {
-         info(new String(blob))
-      }
-
-      info ("Starting...")
-      val consumer = new KafkaConsumer(Settings.topicName, "group1", Settings.zooKeeper, true)
-      //consumer.debug_read (debugMessage)
-      consumer.read(processMessage)
+   def cleanup() : Unit = {
       consumer.close()
-
-      info ("Done.");
    }
+
+   sys addShutdownHook {
+      println("Shutting down...")
+      cleanup()
+      println("Done shutting down.")
+   }
+   val counter: AtomicInteger = new AtomicInteger(0)
+
+   def debugMessage(msg: MessageAndMetadata[Array[Byte], Array[Byte]]) : Unit = {
+      info(new String(msg.message()) + " from partition #" + msg.partition)
+   }
+
+   def processMessage(blob: Array[Byte]) : Unit = {
+      info(" <#" + counter.incrementAndGet().toString() + "> : " + (new String(blob)) )
+   }
+
+
+   info ("Starting...")
+   val consumer = new KafkaConsumer(Settings.topicName, "group2", Settings.zooKeeper, true)
+   //consumer.debug_read (debugMessage)
+   consumer.read(processMessage)
+   consumer.close()
+
+   info ("Done.")
 }

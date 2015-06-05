@@ -22,19 +22,18 @@ object TestConsumer extends App with Logging {
    val counter: AtomicInteger = new AtomicInteger(0)
 
    def debugMessage(msg: MessageAndMetadata[Array[Byte], Array[Byte]]) : Unit = {
-      info(new String(msg.message()) + " from partition #" + msg.partition) // + " (thread = " + Thread.currentThread().getId() + ")")
+      info("<#" + counter.incrementAndGet().toString() + "> " + new String(msg.message()) + " partition #" + msg.partition + " " + math.abs((new String(msg.key())).hashCode() % 12))
    }
 
    def processMessage(blob: Array[Byte]) : Unit = {
       info(" <#" + counter.incrementAndGet().toString() + "> : " + (new String(blob)) )
    }
 
-
    info ("Starting...")
    val consumer = new KafkaConsumer(Settings.topicName, "group2", Settings.zooKeeper, true)
    consumer.read (debugMessage)
    //consumer.read(processMessage)
-   consumer.close()
+   consumer.close() // actually never get here since read() reads forever
 
    info ("Done.")
 }

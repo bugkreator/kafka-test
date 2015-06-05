@@ -15,14 +15,14 @@ object TestConsumer extends App with Logging {
    }
 
    sys addShutdownHook {
-      println("Shutting down...")
+      info("Shutting down...")
       cleanup()
-      println("Done shutting down.")
+      info("Done shutting down.")
    }
    val counter: AtomicInteger = new AtomicInteger(0)
 
    def debugMessage(msg: MessageAndMetadata[Array[Byte], Array[Byte]]) : Unit = {
-      info(new String(msg.message()) + " from partition #" + msg.partition)
+      info(new String(msg.message()) + " from partition #" + msg.partition) // + " (thread = " + Thread.currentThread().getId() + ")")
    }
 
    def processMessage(blob: Array[Byte]) : Unit = {
@@ -32,8 +32,8 @@ object TestConsumer extends App with Logging {
 
    info ("Starting...")
    val consumer = new KafkaConsumer(Settings.topicName, "group2", Settings.zooKeeper, true)
-   //consumer.debug_read (debugMessage)
-   consumer.read(processMessage)
+   consumer.read (debugMessage)
+   //consumer.read(processMessage)
    consumer.close()
 
    info ("Done.")

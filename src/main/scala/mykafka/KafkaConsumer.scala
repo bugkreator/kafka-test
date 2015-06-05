@@ -77,6 +77,7 @@ class KafkaConsumer(
    props.put("group.id", groupId)
    props.put("zookeeper.connect", zookeeperConnect)
    props.put("auto.offset.reset", if(readFromStartOfStream) "smallest" else "largest")
+   props.put("auto.commit.interval.ms", "1000")
 
    val config = new ConsumerConfig(props)
    val connector = Consumer.create(config)
@@ -91,13 +92,14 @@ class KafkaConsumer(
    val stream = connector.createMessageStreamsByFilter(filterSpec, 1, new DefaultDecoder(), new DefaultDecoder()).get(0)
    info("setup:complete topic=%s for zk=%s and groupId=%s".format(topic,zookeeperConnect,groupId))
 
+   /*
+
    def read(write: (Array[Byte])=>Unit) = {
       info("reading on stream now")
       for(messageAndTopic <- stream) {
          try {
             //info("writing from stream")
             write(messageAndTopic.message)
-            commitOffsets(true)
             //info("written to stream")
          } catch {
             case e: Throwable =>
@@ -109,8 +111,9 @@ class KafkaConsumer(
          }
       }
    }
+*/
 
-   def debug_read(write: MessageAndMetadata[Array[Byte], Array[Byte]] =>Unit) = {
+   def read(write: MessageAndMetadata[Array[Byte], Array[Byte]] =>Unit) = {
       info("debug_reading stream now")
       for (messageAndTopic <- stream) {
          try {

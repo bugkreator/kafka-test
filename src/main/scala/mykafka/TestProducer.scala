@@ -1,6 +1,5 @@
 package mykafka
 
-import java.text.SimpleDateFormat
 import java.util.{Calendar, UUID}
 
 import kafka.utils.Logging
@@ -11,9 +10,11 @@ object TestProducer extends Logging {
       info ("Starting...")
       val producer = new KafkaProducer[String,String](Settings.topicName, Settings.brokerList)
 
-      for (i<-1 to 50000)  {
+      val numMessages : Int = if (args.length>0)  Integer.parseInt(args(0)) else 1000
+
+      for (i<-1 to numMessages)  {
          val key : String = UUID.randomUUID().toString()
-         val message = "#" + i + " " + key + " " + (new SimpleDateFormat("YYYYMMddhhmmssSSS")).format(Calendar.getInstance.getTime)
+         val message = "#" + i + " " + key + " " + Calendar.getInstance.getTimeInMillis
          producer.send(message,key)
          //Thread.sleep(200)
          if (i%100==0)
@@ -23,6 +24,6 @@ object TestProducer extends Logging {
       }
       producer.close()
 
-      info ("Done.");
+      info ("Done - " + numMessages + " messages.")
    }
 }

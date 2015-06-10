@@ -1,6 +1,7 @@
 package mykafka
 
 
+
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.{Calendar, UUID}
 
@@ -9,6 +10,8 @@ import kafka.utils.Logging
 
 object TestConsumer extends App with Logging {
    //def main(args: Array[String]) {
+
+   val executionId : String = UUID.randomUUID().toString().replace("-","")
 
    def cleanup() : Unit = {
       consumer.close()
@@ -21,8 +24,15 @@ object TestConsumer extends App with Logging {
    }
    val counter: AtomicInteger = new AtomicInteger(0)
 
+   def myInfo(text: String) : Unit = {
+      val printString = Calendar.getInstance.getTimeInMillis() + " " + executionId + " $" + Thread.currentThread().getId() + "$ " + text
+      //println(printString)
+      info(printString)
+   }
+
    def debugMessage(msg: MessageAndMetadata[Array[Byte], Array[Byte]]) : Unit = {
-      info("<#" + counter.incrementAndGet().toString() + "> " + new String(msg.message()) + " partition #" + msg.partition + " " + math.abs((new String(msg.key())).hashCode() % 12))
+
+      myInfo("#" + counter.incrementAndGet().toString() + " " + new String(msg.message()) )
    }
 
    def processMessage(blob: Array[Byte]) : Unit = {

@@ -78,6 +78,7 @@ class KafkaConsumer(
    props.put("zookeeper.connect", zookeeperConnect)
    props.put("auto.offset.reset", if(readFromStartOfStream) "smallest" else "largest")
    props.put("auto.commit.interval.ms", "1000")
+   //props.put("num.consumer.fetchers", "4") // how does this affect the number of threads getting data?
 
    val config = new ConsumerConfig(props)
    val connector = Consumer.create(config)

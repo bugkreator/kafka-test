@@ -2,6 +2,7 @@ package mykafka
 
 import java.util.{Calendar, UUID}
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import kafka.utils.Logging
 
 object TestProducer extends Logging {
@@ -10,7 +11,7 @@ object TestProducer extends Logging {
       info ("Starting...")
       val producer = new KafkaProducer[String,String](Settings.topicName, Settings.brokerList)
 
-      val numMessages : Int = if (args.length>0)  Integer.parseInt(args(0)) else 1000
+      val numMessages : Int =  if (args.length>0) Integer.parseInt(args(0)) else 1000
 
       for (i<-1 to numMessages)  {
          val key : String = UUID.randomUUID().toString()

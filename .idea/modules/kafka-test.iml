@@ -39,5 +39,13 @@
     <orderEntry type="library" name="SBT: org.apache.kafka:kafka-clients:0.8.2.1:jar" level="project" />
     <orderEntry type="library" name="SBT: log4j:log4j:1.2.17:jar" level="project" />
     <orderEntry type="library" name="SBT: org.slf4j:slf4j-log4j12:1.7.5:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-annotations:2.4.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-core:2.4.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-databind:2.4.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.fasterxml.jackson.module:jackson-module-scala_2.11:2.4.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.google.code.findbugs:jsr305:2.0.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.google.guava:guava:15.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.thoughtworks.paranamer:paranamer:2.6:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang:scala-reflect:2.11.1:jar" level="project" />
   </component>
 </module>

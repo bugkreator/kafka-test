@@ -1,7 +1,7 @@
 package mykafka
 
 object Settings {
-   val topicName = "topic20"
+   val topicName = "topic21"
    val groupId_1 = "Group-RealTime"
    val groupId_2 = "Group-Batch"
    val zooKeeper = "ubuntu:2181"

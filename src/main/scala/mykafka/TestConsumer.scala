@@ -32,7 +32,7 @@ object TestConsumer extends App with Logging {
 
    def debugMessage(msg: MessageAndMetadata[Array[Byte], Array[Byte]]) : Unit = {
 
-      myInfo("#" + counter.incrementAndGet().toString() + " " + new String(msg.message()) )
+      myInfo("#" + counter.incrementAndGet().toString() + " " + new String(msg.message())  )
    }
 
    def processMessage(blob: Array[Byte]) : Unit = {

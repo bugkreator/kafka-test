@@ -18,8 +18,11 @@ object TestConsumer extends App with Logging {
    }
 
    sys addShutdownHook {
-      info("Shutting down...")
       cleanup()
+      info("Shutting down...")
+      info ("******************")
+      info ("Consumed " + counter.get().toString() + " messages.")
+      info ("******************")
       info("Done shutting down.")
    }
    val counter: AtomicInteger = new AtomicInteger(0)

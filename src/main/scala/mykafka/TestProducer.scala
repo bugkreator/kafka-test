@@ -12,7 +12,7 @@ object TestProducer extends Logging {
       info ("Starting...")
       val producer = new KafkaProducer[String,String](Settings.topicName, Settings.brokerList, synchronously = false)
 
-      val numMessages : Int =  if (args.length>0) Integer.parseInt(args(0)) else 10000
+      val numMessages : Int =  if (args.length>0) Integer.parseInt(args(0)) else 5000
       val mapper: ObjectMapper = new ObjectMapper()
       mapper.registerModule(DefaultScalaModule)
 

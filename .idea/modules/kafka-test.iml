@@ -47,5 +47,10 @@
     <orderEntry type="library" name="SBT: com.google.guava:guava:15.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.thoughtworks.paranamer:paranamer:2.6:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang:scala-reflect:2.11.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.avro:avro:1.7.7:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.commons:commons-compress:1.4.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.codehaus.jackson:jackson-core-asl:1.9.13:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.codehaus.jackson:jackson-mapper-asl:1.9.13:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.tukaani:xz:1.0:jar" level="project" />
   </component>
 </module>

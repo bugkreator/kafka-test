@@ -1,9 +1,12 @@
 {
 "type": "record",
-"name": "StringPair",
-"doc": "A pair of strings.",
-"fields": [
-{"name": "left", "type": "string"},
-{"name": "right", "type": "string"}
-]
+"name": "DataEvent",
+"doc": "An event with data.",
+"fields":
+    [
+        {"name": "name", "type": "string"},
+        {"name": "data", "type": {"type":"map", "values": "string"}},
+        {"name": "time", "type": "long"},
+        {"name": "id", "type": "string"}
+    ]
 }

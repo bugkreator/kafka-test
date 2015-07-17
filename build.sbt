@@ -10,4 +10,4 @@ libraryDependencies += "org.slf4j" % "slf4j-log4j12" % "1.7.5"
 
 libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.4.0"
 libraryDependencies += "com.fasterxml.jackson.module" % "jackson-module-scala_2.11" % "2.4.0"
-libraryDependencies += "org.apache.avro" % "avro" % "1.7.7"
+//libraryDependencies += "org.apache.avro" % "avro" % "1.7.7"

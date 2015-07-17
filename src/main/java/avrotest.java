@@ -6,6 +6,8 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.*;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by odedrotem on 7/14/15.
@@ -16,8 +18,14 @@ public class avrotest {
         Schema.Parser parser = new Schema.Parser();
         Schema schema = parser.parse(new java.io.File("/Users/odedrotem/dev/kafka-test/src/main/java/schema.avsc"));
         GenericRecord datum = new GenericData.Record(schema);
-        datum.put("left", "L");
-        datum.put("right", "R");
+        datum.put("time", 123L);
+        datum.put("name", "pageview");
+        datum.put("id", "ABCDEF");
+        Map<String,String> testdata = new HashMap<String, String>();
+        testdata.put("x", "1");
+        testdata.put("y", "2");
+        testdata.put("z", "3");
+        datum.put("data", testdata);
         System.out.println(datum.toString());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         DatumWriter<GenericRecord> writer =
@@ -33,6 +41,7 @@ public class avrotest {
                 null);
         GenericRecord result = reader.read(null, decoder);
         System.out.println(result);
+
         //result.get("left").toString(), is("L"));
         //result.get("right").toString(), is("R"));
     }

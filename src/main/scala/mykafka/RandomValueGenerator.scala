@@ -26,6 +26,7 @@ trait SerialUniformGenerator extends UniformGenerator
 
 class RandomValueGenerator[T](Distribution: List[(T,Int)]) extends UniformGenerator with RandomUniformGenerator {
    // sum the weights
+
    if (Distribution.map(_._2).sum!=maxValue) {throw new Exception("Total of weights must be " + maxValue.toString())}
    val dummyElement: T = null.asInstanceOf[T]
    // accumDistribution -> running cumulative weights, for easier selection

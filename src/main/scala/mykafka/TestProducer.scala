@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import kafka.utils.Logging
 
+
+
 object TestProducer extends Logging {
    def main(args: Array[String]) {
 

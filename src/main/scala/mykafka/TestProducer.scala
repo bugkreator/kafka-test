@@ -27,11 +27,11 @@ object TestProducer extends Logging {
          val ev = new MyEvent("PageView", dimensionGenerators.map( {case (k,v) => k->v.getNext()}) , Id = key)
          val message = mapper.writeValueAsString(ev) //TODO: Make this more low level to avoid serializing to string and then sending, so that mapper serializes directly into kafka client stream
          producer.send(message,key)
-         //Thread.sleep(200)
-         if (i%100==0)
-            {
-               info("Message #" + i)
-            }
+         Thread.sleep(5)
+         if (i%1000==0)
+         {
+            info("Message #" + i)
+         }
       }
       val endTime:Long = Calendar.getInstance().getTimeInMillis()
       producer.close()

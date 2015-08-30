@@ -12,7 +12,7 @@ object TestProducer extends Logging {
    def main(args: Array[String]) {
 
       info ("Starting...")
-      val producer = new KafkaProducer[String,String](Globals.topicName, Globals.brokerList, synchronously = false)
+      val producer = new KafkaProducer[String,String](Settings.topicName, Settings.brokerList, synchronously = false)
 
       val numMessages : Int =  if (args.length>0) Integer.parseInt(args(0)) else 5000
       val mapper: ObjectMapper = new ObjectMapper()

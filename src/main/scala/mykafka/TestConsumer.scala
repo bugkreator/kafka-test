@@ -43,7 +43,7 @@ object TestConsumer extends App with Logging {
    }
 
    info ("Starting...")
-   val consumer = new KafkaConsumer(Globals.topicName, "group2", Globals.zooKeeper, true)
+   val consumer = new KafkaConsumer(Settings.topicName, "group2", Settings.zooKeeper, true)
    consumer.read (debugMessage)
    //consumer.read(processMessage)
    consumer.close() // actually never get here since read() reads forever
